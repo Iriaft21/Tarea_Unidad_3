@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tarea_Unidad_3</string>
+    <string name="titulo">Xogo de memoria</string>
+    <string name="toast_diferencia">As cartas non son iguais</string>
+    <string name="toast_acierto">As cartas son iguais</string>
+    <string name="btn_salir">Saír</string>
+    <string name="btn_nueva_partida">Nova partida</string>
+</resources>

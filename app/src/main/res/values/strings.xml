@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Tarea_Unidad_3</string>
+    <string name="titulo">Juego de memoria</string>
+    <string name="toast_diferencia">Las cartas no son iguales</string>
+    <string name="toast_acierto">Las cartas son iguales</string>
+    <string name="btn_salir">Salir</string>
+    <string name="btn_nueva_partida">Nueva partida</string>
+</resources>
