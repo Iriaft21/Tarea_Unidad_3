@@ -5,4 +5,6 @@
     <string name="toast_acierto">Las cartas son iguales</string>
     <string name="btn_salir">Salir</string>
     <string name="btn_nueva_partida">Nueva partida</string>
+    <string name="descripcion">Reverso de la carta</string>
+    <string name="descripcion_cara">Cara de la carta. Pueden ser distintos diseños.</string>
 </resources>

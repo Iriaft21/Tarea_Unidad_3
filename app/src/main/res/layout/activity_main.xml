@@ -16,7 +16,9 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="177dp"
         android:text="@string/titulo"
+        android:textColor="@color/design_default_color_secondary_variant"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,30 +27,88 @@
         android:id="@+id/imageView"
         android:layout_width="37dp"
         android:layout_height="33dp"
-        app:srcCompat="@drawable/juego_de_memoria"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="34dp" />
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/juego_de_memoria" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="37dp"
         android:layout_height="33dp"
-        app:srcCompat="@drawable/juego_de_memoria"
-        tools:layout_editor_absoluteX="358dp"
-        tools:layout_editor_absoluteY="34dp" />
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="33dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/juego_de_memoria" />
 
     <ToggleButton
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="123dp" />
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="44dp"
+        android:textColor="@color/md_theme_onBackground_mediumContrast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="299dp"
-        android:layout_height="416dp"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="206dp" />
+        android:id="@+id/rvCartas"
+        android:layout_width="340dp"
+        android:layout_height="446dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:background="#5FFFFFFF"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_salir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/btn_salir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCartas" />
+
+    <Button
+        android:id="@+id/btn_nuevaPartida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/btn_nueva_partida"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCartas" />
+
+    <Chronometer
+        android:id="@+id/cronometro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="33dp"
+        android:background="#000000"
+        android:backgroundTint="#000000"
+        android:padding="5dp"
+        android:textColor="#8BC34A"
+        android:textColorHint="#4CAF50"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
