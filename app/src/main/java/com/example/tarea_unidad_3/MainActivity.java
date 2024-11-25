@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -21,7 +20,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     private int parejasHechas;
     private  ImageView felicitacion;
     private boolean puedeVoltear = true;
+    private Chronometer cronometro;
 
     public boolean getPuedeVoltear() {
         return this.puedeVoltear;
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
     public void toggleCronometro(){
         ToggleButton tg_cronometro = findViewById(R.id.toggleButton);
-        Chronometer cronometro = findViewById(R.id.cronometro);
+        cronometro = findViewById(R.id.cronometro);
         cronometro.setVisibility(View.INVISIBLE);
 
         tg_cronometro.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -132,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
     private void generarNuevaPartida(){
         parejasHechas = 0;
+        cronometro.setBase(SystemClock.elapsedRealtime());
+        cronometro.stop();
+        cronometro.setBase(SystemClock.elapsedRealtime());
+        cronometro.start();
         for(Carta carta :  cartaArrayList){
             carta.getIvCara().setVisibility(View.INVISIBLE);
             carta.getIvReverso().setVisibility(View.VISIBLE);
@@ -148,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         Log.i("Debug", "Se ha seleccionado una carta");
         Carta carta = cartaArrayList.get(position);
 
-        carta.getIvCara().setVisibility(View.VISIBLE);
-        carta.getIvReverso().setVisibility(View.INVISIBLE);
+        //carta.getIvCara().setVisibility(View.VISIBLE);
+        //carta.getIvReverso().setVisibility(View.INVISIBLE);
 
         cartasSeleccionadas.add(carta);
 
@@ -160,11 +163,14 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         Log.i("Debug", "Tamaño de cartasSeleccionadas: " + cartasSeleccionadas.size());
 
         if(cartasSeleccionadas.size()==2){
+            Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
             if(cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())){
+                Log.i("Debug", "He entrado en el if porque somos dos cartas iguales");
                 Toast.makeText(view.getContext(), acierto,Toast.LENGTH_SHORT).show();
                 parejasHechas++;
-                if (parejasHechas == 6){
+                if (parejasHechas == 8){
                     felicitacion.setVisibility(View.VISIBLE);
+                    Log.i("Debug", "Se han encontrado todas las parejas");
                     try {
                         Thread.sleep(10000);
                     } catch (InterruptedException e) {
@@ -173,8 +179,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                     felicitacion.setVisibility(View.INVISIBLE);
                     generarNuevaPartida();
                 }
-
+                cartasSeleccionadas.clear();
             } else{
+
+                Log.i("Debug", "He entrado en el else porque somos dos cartas diferentes");
                 this.setPuedeVoltear(false);
                 Toast.makeText(view.getContext(), fallo,Toast.LENGTH_SHORT).show();
 
@@ -197,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                             }
                         }
                         cartasSeleccionadas.clear();
-                        // desbloquearApp()
                     }
                 }, 2000);
             }

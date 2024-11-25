@@ -1,15 +1,12 @@
 package com.example.tarea_unidad_3;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 
@@ -66,8 +63,8 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         //no entra aqui
         @Override
         public void onClick(View view) {
-            // imageViewCara.setVisibility(View.VISIBLE);
-            // imageViewReverso.setVisibility(View.INVISIBLE);
+            imageViewCara.setVisibility(View.VISIBLE);
+            imageViewReverso.setVisibility(View.INVISIBLE);
             //Log.i("Debug","Saludos desde girar la carta a boca arriba");
 
             itemClickListener.onItemClick(view, getAdapterPosition());

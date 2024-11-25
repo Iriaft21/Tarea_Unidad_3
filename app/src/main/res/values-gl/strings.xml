@@ -8,4 +8,6 @@
     <string name="btn_nueva_partida">Nova partida</string>
     <string name="descripcion">Reverso da carta</string>
     <string name="descripcion_cara">Cara da carta. Poden ser distintos deseños.</string>
+    <string name="txt_contentDescription_icono_juego">ícona que representa un xogo de memoria</string>
+    <string name="txt_contentDescription_felicitacion">Imaxe que felicita ao xogador unha vez haxa atopado todas as parexas</string>
 </resources>
