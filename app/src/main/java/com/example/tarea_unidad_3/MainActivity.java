@@ -158,13 +158,13 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
     @Override
     public void onItemClick(View view, int position) {
+        Carta carta = cartaArrayList.get(position);
 
-        if (!this.getPuedeVoltear()) {
+        if (!this.getPuedeVoltear() || carta.isParejaEncontrada()) {
             return;
         }
         
         Log.i("Debug", "Se ha seleccionado una carta");
-        Carta carta = cartaArrayList.get(position);
 
         cartasSeleccionadas.add(carta);
 
@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 Log.i("Debug", "Son dos cartas iguales");
                 Toast.makeText(view.getContext(), acierto,Toast.LENGTH_SHORT).show();
                 parejasHechas++;
+                cartasSeleccionadas.get(0).setParejaEncontrada(true);
+                cartasSeleccionadas.get(1).setParejaEncontrada(true);
+
                 if (parejasHechas == 8){
                     //felicitacion.setVisibility(View.VISIBLE);
                     Log.i("Debug", "Se han encontrado todas las parejas");

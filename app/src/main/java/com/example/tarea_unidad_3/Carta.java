@@ -9,6 +9,7 @@ public class Carta {
     private String valor;
     private ImageView ivReverso;
     private ImageView ivCara;
+    private boolean parejaEncontrada;
 
     public Carta(int imagenReverso, int imagenCara, String valor) {
         this.imagenReverso = imagenReverso;
@@ -54,6 +55,14 @@ public class Carta {
 
     public void setIvCara(ImageView ivCara) {
         this.ivCara = ivCara;
+    }
+
+    public boolean isParejaEncontrada() {
+        return parejaEncontrada;
+    }
+
+    public void setParejaEncontrada(boolean parejaEncontrada) {
+        this.parejaEncontrada = parejaEncontrada;
     }
 
     @Override
