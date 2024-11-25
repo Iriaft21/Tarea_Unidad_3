@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     private ArrayList<Carta> cartaArrayList;
     private final ArrayList<Carta> cartasSeleccionadas = new ArrayList<>();
     private int parejasHechas;
-    private  ImageView felicitacion;
+    //private  ImageView felicitacion;
     private boolean puedeVoltear = true;
     private Chronometer cronometro;
 
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
         CartaAdapter cartaAdapter = new CartaAdapter(cartaArrayList, this);
         RecyclerView rvCartas = findViewById(R.id.rvCartas);
-        felicitacion = findViewById(R.id.partida_ganada);
-        felicitacion.setVisibility(View.INVISIBLE);
+//        felicitacion = findViewById(R.id.partida_ganada);
+//        felicitacion.setVisibility(View.INVISIBLE);
         botonSalir();
         nuevaPartida();
         toggleCronometro();
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     }
 
     public void toggleCronometro(){
+        //se pone por defecto un cronometro invisible
         ToggleButton tg_cronometro = findViewById(R.id.toggleButton);
         cronometro = findViewById(R.id.cronometro);
         cronometro.setVisibility(View.INVISIBLE);
@@ -129,13 +130,27 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         });
     }
 
-    private void generarNuevaPartida(){
+    private void generarNuevaPartida() {
+        // Se pone a cero las parejas encontradas así como el cronometro
         parejasHechas = 0;
         cronometro.setBase(SystemClock.elapsedRealtime());
         cronometro.stop();
         cronometro.setBase(SystemClock.elapsedRealtime());
         cronometro.start();
-        for(Carta carta :  cartaArrayList){
+
+        // Se voltea boca abajo todas las cartas
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setPuedeVoltear(true);
+                voltearTodasLasCartas();
+            }
+        }, 1000);
+    }
+
+    private void voltearTodasLasCartas() {
+        for (Carta carta : cartaArrayList) {
             carta.getIvCara().setVisibility(View.INVISIBLE);
             carta.getIvReverso().setVisibility(View.VISIBLE);
         }
@@ -151,9 +166,6 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         Log.i("Debug", "Se ha seleccionado una carta");
         Carta carta = cartaArrayList.get(position);
 
-        //carta.getIvCara().setVisibility(View.VISIBLE);
-        //carta.getIvReverso().setVisibility(View.INVISIBLE);
-
         cartasSeleccionadas.add(carta);
 
         String acierto = getResources().getString(R.string.toast_acierto);
@@ -165,24 +177,19 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         if(cartasSeleccionadas.size()==2){
             Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
             if(cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())){
-                Log.i("Debug", "He entrado en el if porque somos dos cartas iguales");
+                Log.i("Debug", "Son dos cartas iguales");
                 Toast.makeText(view.getContext(), acierto,Toast.LENGTH_SHORT).show();
                 parejasHechas++;
                 if (parejasHechas == 8){
-                    felicitacion.setVisibility(View.VISIBLE);
+                    //felicitacion.setVisibility(View.VISIBLE);
                     Log.i("Debug", "Se han encontrado todas las parejas");
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    felicitacion.setVisibility(View.INVISIBLE);
+                    //felicitacion.setVisibility(View.INVISIBLE);
                     generarNuevaPartida();
                 }
                 cartasSeleccionadas.clear();
             } else{
 
-                Log.i("Debug", "He entrado en el else porque somos dos cartas diferentes");
+                Log.i("Debug", "Son dos cartas diferentes");
                 this.setPuedeVoltear(false);
                 Toast.makeText(view.getContext(), fallo,Toast.LENGTH_SHORT).show();
 
@@ -206,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                         }
                         cartasSeleccionadas.clear();
                     }
-                }, 2000);
+                }, 1000);
             }
         }
     }
