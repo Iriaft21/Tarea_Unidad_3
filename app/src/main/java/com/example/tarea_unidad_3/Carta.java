@@ -1,10 +1,14 @@
 package com.example.tarea_unidad_3;
 
+import android.widget.ImageView;
+
 public class Carta {
 
     private int imagenReverso;
     private int imagenCara;
     private String valor;
+    private ImageView ivReverso;
+    private ImageView ivCara;
 
     public Carta(int imagenReverso, int imagenCara, String valor) {
         this.imagenReverso = imagenReverso;
@@ -34,6 +38,22 @@ public class Carta {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    public ImageView getIvReverso() {
+        return ivReverso;
+    }
+
+    public void setIvReverso(ImageView ivReverso) {
+        this.ivReverso = ivReverso;
+    }
+
+    public ImageView getIvCara() {
+        return ivCara;
+    }
+
+    public void setIvCara(ImageView ivCara) {
+        this.ivCara = ivCara;
     }
 
     @Override

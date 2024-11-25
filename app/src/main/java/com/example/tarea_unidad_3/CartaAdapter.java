@@ -25,7 +25,6 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     public CartaAdapter(ArrayList<Carta> coleccion, OnItemClickListener itemClickListener) {
         this.coleccion = coleccion;
         this.itemClickListener = itemClickListener;
-        Log.i("Debug","Saludos desde  el constructor");
     }
 
     @NonNull
@@ -35,7 +34,6 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
                 new CartaViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.carta, parent, false)
                 );
-        Log.i("Debug","Saludos desde onCreateViewHolder");
         return cartaViewHolder;
     }
 
@@ -45,27 +43,8 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         holder.imageViewReverso.setImageResource(carta.getImagenReverso());
         holder.imageViewCara.setImageResource(carta.getImagenCara());
         holder.imageViewCara.setVisibility(ImageView.INVISIBLE);
-        Log.i("Debug","Saludos desde onBindViewHolder");
-
-        /*
-        holder.imageViewReverso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.imageViewCara.setVisibility(View.VISIBLE);
-                holder.imageViewReverso.setVisibility(View.INVISIBLE);
-                Log.i("Debug","Saludos desde girar la carta a boca arriba");
-            }
-        });
-
-
-        holder.imageViewCara.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.imageViewReverso.setVisibility(View.VISIBLE);
-                holder.imageViewCara.setVisibility(View.INVISIBLE);
-                Log.i("Debug","Saludos desde girar la carta a boca abajo");
-            }
-        });*/
+        carta.setIvReverso(holder.imageViewReverso);
+        carta.setIvCara(holder.imageViewCara);
     }
 
     @Override
@@ -77,21 +56,18 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         ImageView imageViewReverso;
         ImageView imageViewCara;
 
-
         public CartaViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             imageViewReverso = itemView.findViewById(R.id.reverso);
             imageViewCara = itemView.findViewById(R.id.cara);
-            //Log.i("Debug","Saludos desde CartaViewHolder");
         }
-
 
         //no entra aqui
         @Override
         public void onClick(View view) {
-            imageViewCara.setVisibility(View.VISIBLE);
-            imageViewReverso.setVisibility(View.INVISIBLE);
+            // imageViewCara.setVisibility(View.VISIBLE);
+            // imageViewReverso.setVisibility(View.INVISIBLE);
             //Log.i("Debug","Saludos desde girar la carta a boca arriba");
 
             itemClickListener.onItemClick(view, getAdapterPosition());
