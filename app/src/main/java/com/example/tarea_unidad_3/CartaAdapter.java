@@ -18,6 +18,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
 
     private ArrayList<Carta> coleccion;
     private OnItemClickListener itemClickListener;
+    public boolean isClickable= true;
 
     public CartaAdapter(ArrayList<Carta> coleccion, OnItemClickListener itemClickListener) {
         this.coleccion = coleccion;
@@ -60,15 +61,16 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
             imageViewCara = itemView.findViewById(R.id.cara);
         }
 
-        //no entra aqui
         @Override
         public void onClick(View view) {
             imageViewCara.setVisibility(View.VISIBLE);
             imageViewReverso.setVisibility(View.INVISIBLE);
-            //Log.i("Debug","Saludos desde girar la carta a boca arriba");
+
+            if(!isClickable) {
+                return;
+            }
 
             itemClickListener.onItemClick(view, getAdapterPosition());
-            //System.out.println("entra en el onclick de cartaViewHolder");
         }
     }
 }

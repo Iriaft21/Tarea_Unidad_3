@@ -112,6 +112,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
+    <ImageView
+        android:id="@+id/partida_ganada"
+        android:layout_width="300dp"
+        android:layout_height="347dp"
+        android:layout_marginBottom="132dp"
+        android:contentDescription="@string/txt_contentDescription_felicitacion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/partida_ganada" />
+
     <!--<ImageView
         android:id="@+id/partida_ganada"
         android:layout_width="378dp"
