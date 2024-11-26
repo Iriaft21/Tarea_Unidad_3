@@ -72,58 +72,66 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 new Carta(R.drawable.reverso, R.drawable.charizard, "charizard"),
                 new Carta(R.drawable.reverso, R.drawable.charizard, "charizard")));
 
+        //se barajan las cartas, poniendolas en posiciones aleatorias
         Collections.shuffle(cartaArrayList);
 
+        //se crea el adaptador, se busca el RecyclerView y la imagen de partida ganada se pone invisble
         cartaAdapter = new CartaAdapter(cartaArrayList, this);
         rvCartas = findViewById(R.id.rvCartas);
         felicitacion = findViewById(R.id.partida_ganada);
         felicitacion.setVisibility(View.INVISIBLE);
+        //metodo asociado a botones o toggleButton
         botonSalir();
         nuevaPartida();
         toggleCronometro();
 
+        //se escoge el formato del RecyclerView y se le pasa el adaptador
         rvCartas.setLayoutManager(new GridLayoutManager(this,4));
         rvCartas.setAdapter(cartaAdapter);
     }
 
     public void botonSalir(){
+        //se busca el boton de salir en el xml
         Button btn_salir = findViewById(R.id.btn_salir);
-        Log.i("Debug", "Se ha pulsado el boton de salir");
         btn_salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //hace que se salga de la aplicacion
                 finishAndRemoveTask();
             }
         });
     }
 
     public void nuevaPartida(){
-        Log.i("Debug", "Se ha pulsado el boton de nueva partida");
+        //se busca el boton de nueva partida en el xml
         Button btn_nueva_partida = findViewById(R.id.btn_nuevaPartida);
         btn_nueva_partida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //se llama a otro método
                 generarNuevaPartida();
             }
         });
     }
 
     public void toggleCronometro(){
-        //se pone por defecto un cronometro invisible
+        //se busca el toggleButton y el cronometro en el xml
         ToggleButton tg_cronometro = findViewById(R.id.toggleButton);
         cronometro = findViewById(R.id.cronometro);
+        //cronometro por defecto invisible
         cronometro.setVisibility(View.INVISIBLE);
 
         tg_cronometro.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                //sei se activa el toggleButton
                 if(tg_cronometro.isChecked()){
-                    Log.i("Debug", "Cronometro activado");
+                    //Se muestra el cronometro y empieza a contar
                     cronometro.setBase(SystemClock.elapsedRealtime());
                     cronometro.setVisibility(View.VISIBLE);
                     cronometro.start();
                 }else{
-                    Log.i("Debug", "Cronometro desactivado");
+                    //se oculta el cronometro, se pone a cero y se para
                     cronometro.setVisibility(View.INVISIBLE);
                     cronometro.setBase(SystemClock.elapsedRealtime());
                     cronometro.stop();
@@ -146,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se vuelve a barajar las cartas
         Collections.shuffle(cartaArrayList);
 
-        //se modifica el boolean de pareja encontrada, sino no tendran los eventos de ItmClick
+        //se modifica el boolean de pareja encontrada, sino no tendran los eventos de ItemClick
         for (Carta carta : cartaArrayList) {
             carta.setParejaEncontrada(false);
         }

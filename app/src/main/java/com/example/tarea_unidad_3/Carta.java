@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 public class Carta {
 
+    //atributos de la clase
     private int imagenReverso;
     private int imagenCara;
     private String valor;
@@ -11,12 +12,14 @@ public class Carta {
     private ImageView ivCara;
     private boolean parejaEncontrada;
 
+    //constructor de la clase
     public Carta(int imagenReverso, int imagenCara, String valor) {
         this.imagenReverso = imagenReverso;
         this.imagenCara = imagenCara;
         this.valor = valor;
     }
 
+    //getters y setters de las clase
     public int getImagenReverso() {
         return imagenReverso;
     }
@@ -57,6 +60,7 @@ public class Carta {
         this.ivCara = ivCara;
     }
 
+    //para comprobar si se la carta esta ya emparejada
     public boolean isParejaEncontrada() {
         return parejaEncontrada;
     }
@@ -65,6 +69,7 @@ public class Carta {
         this.parejaEncontrada = parejaEncontrada;
     }
 
+    //metodo toString que nos muestra los datos de la clase
     @Override
     public String toString() {
         return "Carta imagendel reverso " + imagenReverso + ", imagen de la cara " + imagenCara + ", valor" + valor;

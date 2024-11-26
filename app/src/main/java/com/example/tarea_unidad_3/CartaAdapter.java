@@ -12,19 +12,23 @@ import java.util.ArrayList;
 
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder>{
 
+    //interfaz del listener OnItemClick
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
     }
 
+    //atributos de la clase
     private ArrayList<Carta> coleccion;
     private OnItemClickListener itemClickListener;
     public boolean isClickable= true;
 
+    //constructor del adaptador
     public CartaAdapter(ArrayList<Carta> coleccion, OnItemClickListener itemClickListener) {
         this.coleccion = coleccion;
         this.itemClickListener = itemClickListener;
     }
 
+    //creación del viewHolder
     @NonNull
     @Override
     public CartaAdapter.CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +39,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         return cartaViewHolder;
     }
 
+    //se asocian los datos de cartas con los elementos de la interfaz
     @Override
     public void onBindViewHolder(@NonNull CartaAdapter.CartaViewHolder holder, int position) {
         Carta carta = coleccion.get(position);
@@ -45,6 +50,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         carta.setIvCara(holder.imageViewCara);
     }
 
+    //mostrar cuantos elementos contiene el adaptador
     @Override
     public int getItemCount() {
         return coleccion.size();
@@ -56,13 +62,17 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
 
         public CartaViewHolder(@NonNull View itemView) {
             super(itemView);
+            //se asocia el evento a una view
             itemView.setOnClickListener(this);
+            //se asocian las imageView a los elementos de la interfaz
             imageViewReverso = itemView.findViewById(R.id.reverso);
             imageViewCara = itemView.findViewById(R.id.cara);
         }
 
+        //evento onClick
         @Override
         public void onClick(View view) {
+            //la cara de la carta se hace visible y el reverso invisible
             imageViewCara.setVisibility(View.VISIBLE);
             imageViewReverso.setVisibility(View.INVISIBLE);
 
