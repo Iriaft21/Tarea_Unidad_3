@@ -193,66 +193,77 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         if(cartasSeleccionadas.size()==2) {
             Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
             if (cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())) {
-                Log.i("Debug", "Son dos cartas iguales");
-
-                Toast.makeText(view.getContext(), acierto, Toast.LENGTH_SHORT).show();
-                parejasHechas++;
-
-                cartasSeleccionadas.get(0).setParejaEncontrada(true);
-                cartasSeleccionadas.get(1).setParejaEncontrada(true);
-
-                cartasSeleccionadas.clear();
-
-                if (parejasHechas == 8) {
-                    Log.i("Debug", "Se han encontrado todas las parejas");
-
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            felicitacion.setVisibility(View.VISIBLE);
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    felicitacion.setVisibility(View.INVISIBLE);
-                                    generarNuevaPartida();
-                                    cartaAdapter.isClickable = true;
-                                }
-                            }, 2000);
-                        }
-                    }, 2000);
-                } else {
-                    cartaAdapter.isClickable = true;
-                }
+                aciertoPareja(view, acierto);
             } else {
-
-                Log.i("Debug", "Son dos cartas diferentes");
-                setPuedeVoltear(false);
-                Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Carta c : cartasSeleccionadas) {
-                            ImageView cara = c.getIvCara();
-                            ImageView reverso = c.getIvReverso();
-
-                            if (cara != null && reverso != null) {
-                                cara.setVisibility(View.INVISIBLE);
-                                reverso.setVisibility(View.VISIBLE);
-                            } else {
-                                Log.e("Debug", "No se encontraron las vistas con los IDs proporcionados.");
-                            }
-                        }
-                        cartasSeleccionadas.clear();
-                        cartaAdapter.isClickable = true;
-                        setPuedeVoltear(true);
-                    }
-                }, 1000);
+                falloPareja(view, fallo);
             }
         }else{
             cartaAdapter.isClickable = true;
         }
+    }
+
+    public void aciertoPareja(View view, String acierto){
+        Log.i("Debug", "Son dos cartas iguales");
+
+        Toast.makeText(view.getContext(), acierto, Toast.LENGTH_SHORT).show();
+        parejasHechas++;
+
+        cartasSeleccionadas.get(0).setParejaEncontrada(true);
+        cartasSeleccionadas.get(1).setParejaEncontrada(true);
+
+        cartasSeleccionadas.clear();
+
+        if (parejasHechas == 8) {
+            finalizarJuego();
+        } else {
+            cartaAdapter.isClickable = true;
+        }
+    }
+
+    public void falloPareja(View view, String fallo){
+        Log.i("Debug", "Son dos cartas diferentes");
+        setPuedeVoltear(false);
+        Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (Carta c : cartasSeleccionadas) {
+                    ImageView cara = c.getIvCara();
+                    ImageView reverso = c.getIvReverso();
+
+                    if (cara != null && reverso != null) {
+                        cara.setVisibility(View.INVISIBLE);
+                        reverso.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.e("Debug", "No se encontró imagen de cara o del reverso");
+                    }
+                }
+                cartasSeleccionadas.clear();
+                cartaAdapter.isClickable = true;
+                setPuedeVoltear(true);
+            }
+        }, 1000);
+    }
+
+    public void finalizarJuego(){
+        Log.i("Debug", "Se han encontrado todas las parejas");
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                felicitacion.setVisibility(View.VISIBLE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        felicitacion.setVisibility(View.INVISIBLE);
+                        generarNuevaPartida();
+                        cartaAdapter.isClickable = true;
+                    }
+                }, 2000);
+            }
+        }, 2000);
     }
 }
