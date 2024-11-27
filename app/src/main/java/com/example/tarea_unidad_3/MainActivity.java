@@ -174,9 +174,14 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     }
 
     private void voltearTodasLasCartas() {
+        //se recorren las cartas y se van poniendo boca abajo
         for (Carta carta : cartaArrayList) {
-            carta.getIvCara().setVisibility(View.INVISIBLE);
-            carta.getIvReverso().setVisibility(View.VISIBLE);
+            if (carta.getIvCara() != null && carta.getIvReverso() != null) {
+                carta.getIvCara().setVisibility(View.INVISIBLE);
+                carta.getIvReverso().setVisibility(View.VISIBLE);
+            } else {
+                Log.e("Debug", "No se encontró imagen de cara o del reverso");
+            }
         }
     }
 
@@ -184,22 +189,24 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     public void onItemClick(View view, int position) {
         Carta carta = cartaArrayList.get(position);
 
+        //se comrpueba que la carta se pueda voltear, que este ya emparejada o que ya este seleccionada de antes en esa tanda
         if (!getPuedeVoltear() || !cartaAdapter.isClickable || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
             return;
         }
-        
-        Log.i("Debug", "Se ha seleccionado una carta");
-
+        //se añade al arrayList de cartas seleccionadas
         cartasSeleccionadas.add(carta);
 
+        //se extrae de los recursos los strings para los Toast
         String acierto = getResources().getString(R.string.toast_acierto);
         String fallo = getResources().getString(R.string.toast_diferencia);
 
         Log.i("Debug", "Carta añadida: " + carta.getValor());
         Log.i("Debug", "Tamaño de cartasSeleccionadas: " + cartasSeleccionadas.size());
 
+        //se comprueba que el tamaño sea siempre dos
         if(cartasSeleccionadas.size()==2) {
             Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
+            //comprobamos que ambas cartas tenga el mismo valor
             if (cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())) {
                 aciertoPareja(view, acierto);
             } else {
@@ -211,16 +218,18 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     }
 
     public void aciertoPareja(View view, String acierto){
-        Log.i("Debug", "Son dos cartas iguales");
-
+        //se envia un Toast avisando del acierto
         Toast.makeText(view.getContext(), acierto, Toast.LENGTH_SHORT).show();
         parejasHechas++;
 
+        //se anotan las cartas como ya emparejadas
         cartasSeleccionadas.get(0).setParejaEncontrada(true);
         cartasSeleccionadas.get(1).setParejaEncontrada(true);
 
+        //se vacia el ArrayList
         cartasSeleccionadas.clear();
 
+        //se estan las 8 parejas encontradas se llama al metodo finalizarJuego
         if (parejasHechas == 8) {
             finalizarJuego();
         } else {
@@ -231,8 +240,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     public void falloPareja(View view, String fallo){
         Log.i("Debug", "Son dos cartas diferentes");
         setPuedeVoltear(false);
+        //toast avisando de que las cartas no son iguales
         Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
 
+        //handler para hacer que se volteen las cartas
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -240,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 for (Carta c : cartasSeleccionadas) {
                     ImageView cara = c.getIvCara();
                     ImageView reverso = c.getIvReverso();
-
+                    //comprobacion de que tenga imagen la carta y en caso afirmativo, se voltean las cartas
                     if (cara != null && reverso != null) {
                         cara.setVisibility(View.INVISIBLE);
                         reverso.setVisibility(View.VISIBLE);
@@ -248,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                         Log.e("Debug", "No se encontró imagen de cara o del reverso");
                     }
                 }
+                //se vacia el ArrayList
                 cartasSeleccionadas.clear();
                 cartaAdapter.isClickable = true;
                 setPuedeVoltear(true);
@@ -256,16 +268,17 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     }
 
     public void finalizarJuego(){
-        Log.i("Debug", "Se han encontrado todas las parejas");
-
+        //handler para que salga la felicitación después de unos segundos
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 felicitacion.setVisibility(View.VISIBLE);
+                //otro handler para que la felicitacion permanezca visible durante unos segundos
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        //se vuelve a hacer la felicitacion invisible y se genera nueva partida
                         felicitacion.setVisibility(View.INVISIBLE);
                         generarNuevaPartida();
                         cartaAdapter.isClickable = true;

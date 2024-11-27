@@ -50,7 +50,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         carta.setIvCara(holder.imageViewCara);
     }
 
-    //mostrar cuantos elementos contiene el adaptador
+    //obtener el numero de elementos que contiene el adaptador
     @Override
     public int getItemCount() {
         return coleccion.size();
