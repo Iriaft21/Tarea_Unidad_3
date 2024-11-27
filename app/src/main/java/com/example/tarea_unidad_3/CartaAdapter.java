@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder>{
 
+    public static boolean puedeClicar = true;
+
     //interfaz del listener OnItemClick
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
@@ -20,7 +22,6 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     //atributos de la clase
     private ArrayList<Carta> coleccion;
     private OnItemClickListener itemClickListener;
-    public boolean isClickable= true;
 
     //constructor del adaptador
     public CartaAdapter(ArrayList<Carta> coleccion, OnItemClickListener itemClickListener) {
@@ -72,13 +73,14 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         //evento onClick
         @Override
         public void onClick(View view) {
+            //se comprueba si la carta se puede clicar
+            if(!puedeClicar){
+                return;
+            }
+            puedeClicar = false;
             //la cara de la carta se hace visible y el reverso invisible
             imageViewCara.setVisibility(View.VISIBLE);
             imageViewReverso.setVisibility(View.INVISIBLE);
-
-            if(!isClickable) {
-                return;
-            }
 
             itemClickListener.onItemClick(view, getAdapterPosition());
         }

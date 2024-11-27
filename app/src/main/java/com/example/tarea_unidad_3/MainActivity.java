@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 carta.getIvCara().setVisibility(View.INVISIBLE);
                 carta.getIvReverso().setVisibility(View.VISIBLE);
             } else {
-                Log.e("Debug", "No se encontró imagen de cara o del reverso");
+                Log.e("Error", "No se encontró imagen de cara o del reverso");
             }
         }
     }
@@ -189,8 +189,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     public void onItemClick(View view, int position) {
         Carta carta = cartaArrayList.get(position);
 
-        //se comrpueba que la carta se pueda voltear, que este ya emparejada o que ya este seleccionada de antes en esa tanda
-        if (!getPuedeVoltear() || !cartaAdapter.isClickable || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
+        //se comrpueba que la carta se pueda voltear, que se pueda clicar, que este ya emparejada o que ya este seleccionada de antes en esa tanda
+        if (!getPuedeVoltear() || !CartaAdapter.puedeClicar || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
+            Log.i("Error", "Click ignorado por condiciones no cumplidas");
+            CartaAdapter.puedeClicar = true;
             return;
         }
         //se añade al arrayList de cartas seleccionadas
@@ -200,20 +202,16 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         String acierto = getResources().getString(R.string.toast_acierto);
         String fallo = getResources().getString(R.string.toast_diferencia);
 
-        Log.i("Debug", "Carta añadida: " + carta.getValor());
-        Log.i("Debug", "Tamaño de cartasSeleccionadas: " + cartasSeleccionadas.size());
-
         //se comprueba que el tamaño sea siempre dos
         if(cartasSeleccionadas.size()==2) {
-            Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
             //comprobamos que ambas cartas tenga el mismo valor
             if (cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())) {
                 aciertoPareja(view, acierto);
             } else {
                 falloPareja(view, fallo);
             }
-        }else{
-            cartaAdapter.isClickable = true;
+        } else{
+            CartaAdapter.puedeClicar = true;
         }
     }
 
@@ -232,13 +230,11 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se estan las 8 parejas encontradas se llama al metodo finalizarJuego
         if (parejasHechas == 8) {
             finalizarJuego();
-        } else {
-            cartaAdapter.isClickable = true;
         }
+        CartaAdapter.puedeClicar= true;
     }
 
     public void falloPareja(View view, String fallo){
-        Log.i("Debug", "Son dos cartas diferentes");
         setPuedeVoltear(false);
         //toast avisando de que las cartas no son iguales
         Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
@@ -256,15 +252,16 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                         cara.setVisibility(View.INVISIBLE);
                         reverso.setVisibility(View.VISIBLE);
                     } else {
-                        Log.e("Debug", "No se encontró imagen de cara o del reverso");
+                        Log.e("Error", "No se encontró imagen de cara o del reverso");
                     }
                 }
                 //se vacia el ArrayList
                 cartasSeleccionadas.clear();
-                cartaAdapter.isClickable = true;
                 setPuedeVoltear(true);
+                CartaAdapter.puedeClicar = true;
             }
         }, 1000);
+
     }
 
     public void finalizarJuego(){
@@ -280,8 +277,12 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                     public void run() {
                         //se vuelve a hacer la felicitacion invisible y se genera nueva partida
                         felicitacion.setVisibility(View.INVISIBLE);
-                        generarNuevaPartida();
-                        cartaAdapter.isClickable = true;
+                        try {
+                            generarNuevaPartida();
+                        } catch (Exception e) {
+                            Log.e("Error", "Error al generar nueva partida: " + e.getMessage());
+                        }
+                        CartaAdapter.puedeClicar = true;
                     }
                 }, 2000);
             }
