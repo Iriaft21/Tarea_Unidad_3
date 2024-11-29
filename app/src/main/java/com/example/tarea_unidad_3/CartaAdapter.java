@@ -29,10 +29,11 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         this.itemClickListener = itemClickListener;
     }
 
-    //creación del viewHolder
+    //se crea el viewHolder
     @NonNull
     @Override
     public CartaAdapter.CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Se infla la vista de la carta desde el archivo de diseño XML
         CartaAdapter.CartaViewHolder cartaViewHolder =
                 new CartaViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.carta, parent, false)
@@ -40,7 +41,7 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         return cartaViewHolder;
     }
 
-    //se asocian los datos de cartas con los elementos de la interfaz
+    //se asocian los datos de cartas con los elementos del viewHolder
     @Override
     public void onBindViewHolder(@NonNull CartaAdapter.CartaViewHolder holder, int position) {
         Carta carta = coleccion.get(position);
@@ -75,13 +76,15 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         public void onClick(View view) {
             //se comprueba si la carta se puede clicar
             if(!puedeClicar){
+                // si no se puede clicar, se sale del método y no se realiza ninguna acción
                 return;
             }
+            //se deshabilita el poder clicar
             puedeClicar = false;
             //la cara de la carta se hace visible y el reverso invisible
             imageViewCara.setVisibility(View.VISIBLE);
             imageViewReverso.setVisibility(View.INVISIBLE);
-
+            // se llama al método onItemClick del itemClickListener pasándole la vista y la posición de la carta clicada
             itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }

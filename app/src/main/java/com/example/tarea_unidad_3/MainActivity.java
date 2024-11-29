@@ -26,6 +26,7 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements CartaAdapter.OnItemClickListener{
 
+    //atributos de la clase
     private ArrayList<Carta> cartaArrayList;
     private ArrayList<Carta> cartasSeleccionadas = new ArrayList<>();
     private int parejasHechas;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     private RecyclerView rvCartas;
     private CartaAdapter cartaAdapter;
 
+    //getters y setters para poder voltear cartas
     public boolean getPuedeVoltear() {
         return this.puedeVoltear;
     }
@@ -75,12 +77,12 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se barajan las cartas, poniendolas en posiciones aleatorias
         Collections.shuffle(cartaArrayList);
 
-        //se crea el adaptador, se busca el RecyclerView y la imagen de partida ganada se pone invisble
+        //se crea el adaptador, se busca el RecyclerView y la imagen de partida ganada y esta ultima se pone invisible
         cartaAdapter = new CartaAdapter(cartaArrayList, this);
         rvCartas = findViewById(R.id.rvCartas);
         felicitacion = findViewById(R.id.partida_ganada);
         felicitacion.setVisibility(View.INVISIBLE);
-        //metodo asociado a botones o toggleButton
+        //metodos asociado a botones o toggleButton
         botonSalir();
         nuevaPartida();
         toggleCronometro();
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         tg_cronometro.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                //sei se activa el toggleButton
+                //se activa el toggleButton
                 if(tg_cronometro.isChecked()){
                     //Se muestra el cronometro y empieza a contar
                     cronometro.setBase(SystemClock.elapsedRealtime());
@@ -189,10 +191,9 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     public void onItemClick(View view, int position) {
         Carta carta = cartaArrayList.get(position);
 
-        //se comrpueba que la carta se pueda voltear, que se pueda clicar, que este ya emparejada o que ya este seleccionada de antes en esa tanda
-        if (!getPuedeVoltear() || !CartaAdapter.puedeClicar || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
+        //se comrpueba que la carta se pueda voltear, que este ya emparejada o que ya este seleccionada de antes en esa tanda
+        if (!getPuedeVoltear()  || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
             Log.i("Error", "Click ignorado por condiciones no cumplidas");
-            CartaAdapter.puedeClicar = true;
             return;
         }
         //se añade al arrayList de cartas seleccionadas
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se extrae de los recursos los strings para los Toast
         String acierto = getResources().getString(R.string.toast_acierto);
         String fallo = getResources().getString(R.string.toast_diferencia);
+        Log.i("Debug","Carta seleccionada" + carta.getValor());
 
         //se comprueba que el tamaño sea siempre dos
         if(cartasSeleccionadas.size()==2) {
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 falloPareja(view, fallo);
             }
         } else{
+            // Si solo se ha seleccionado una carta, se puede volver a clicar
             CartaAdapter.puedeClicar = true;
         }
     }
@@ -227,14 +230,16 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se vacia el ArrayList
         cartasSeleccionadas.clear();
 
-        //se estan las 8 parejas encontradas se llama al metodo finalizarJuego
+        //si estan las 8 parejas encontradas se llama al metodo finalizarJuego
         if (parejasHechas == 8) {
             finalizarJuego();
         }
+        //se permite volver a clicar
         CartaAdapter.puedeClicar= true;
     }
 
     public void falloPareja(View view, String fallo){
+        //se deshabilita el voltear las cartas
         setPuedeVoltear(false);
         //toast avisando de que las cartas no son iguales
         Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
@@ -257,7 +262,9 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 }
                 //se vacia el ArrayList
                 cartasSeleccionadas.clear();
+                //se vuelve a habilitar el volteo
                 setPuedeVoltear(true);
+                //se permite volver a clicar
                 CartaAdapter.puedeClicar = true;
             }
         }, 1000);
@@ -270,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //se muestra la felicitacion
                 felicitacion.setVisibility(View.VISIBLE);
                 //otro handler para que la felicitacion permanezca visible durante unos segundos
                 handler.postDelayed(new Runnable() {
@@ -282,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                         } catch (Exception e) {
                             Log.e("Error", "Error al generar nueva partida: " + e.getMessage());
                         }
+                        //se permite volver a clicar
                         CartaAdapter.puedeClicar = true;
                     }
                 }, 2000);
