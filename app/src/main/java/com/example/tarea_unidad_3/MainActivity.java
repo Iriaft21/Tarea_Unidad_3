@@ -4,21 +4,31 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
     private Chronometer cronometro;
     private RecyclerView rvCartas;
     private CartaAdapter cartaAdapter;
+    private TextView titulo;
 
     public boolean getPuedeVoltear() {
         return this.puedeVoltear;
@@ -80,39 +91,113 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         rvCartas = findViewById(R.id.rvCartas);
         felicitacion = findViewById(R.id.partida_ganada);
         felicitacion.setVisibility(View.INVISIBLE);
+        titulo = findViewById(R.id.titulo);
         //metodo asociado a botones o toggleButton
-        botonSalir();
-        nuevaPartida();
+//        botonSalir();
+//        nuevaPartida();
         toggleCronometro();
 
         //se escoge el formato del RecyclerView y se le pasa el adaptador
         rvCartas.setLayoutManager(new GridLayoutManager(this,4));
         rvCartas.setAdapter(cartaAdapter);
-    }
 
-    public void botonSalir(){
-        //se busca el boton de salir en el xml
-        Button btn_salir = findViewById(R.id.btn_salir);
-        btn_salir.setOnClickListener(new View.OnClickListener() {
+        TabLayout tabLayout = findViewById(R.id.TabLayout);
+        // Añadir pestañas
+//        tabLayout.addTab(tabLayout.newTab().setText("Principal"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Proximamente..."));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                //hace que se salga de la aplicacion
-                finishAndRemoveTask();
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 1){
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main), "Proximamente...", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Acción al deseleccionar una pestaña
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Acción al volver a seleccionar una pestaña
             }
         });
+
+//        titulo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUpMenu(view);
+//            }
+//        });
+        registerForContextMenu(titulo);
     }
 
-    public void nuevaPartida(){
-        //se busca el boton de nueva partida en el xml
-        Button btn_nueva_partida = findViewById(R.id.btn_nuevaPartida);
-        btn_nueva_partida.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //se llama a otro método
-                generarNuevaPartida();
-            }
-        });
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Menú contextual");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mi_menu, menu);
     }
+
+    // Método para gestionar los eventos de los elementos del menú contextual
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.item1) {
+            finishAndRemoveTask();
+        } else if (item.getItemId() == R.id.item2){
+            generarNuevaPartida();
+        }
+        return true;
+    }
+
+
+    //menu pop-up
+//    public void showPopUpMenu(View view) {
+//        PopupMenu popupMenu = new PopupMenu(this,view);
+//        MenuInflater menuInflater = popupMenu.getMenuInflater();
+//        menuInflater.inflate(R.menu.mi_menu, popupMenu.getMenu());
+//
+//        // Manejador de clicks
+//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if (item.getItemId() == R.id.item1){
+//                    finishAndRemoveTask();
+//                } else if(item.getItemId() == R.id.item2){
+//                    generarNuevaPartida();
+//                }
+//                return true;
+//            }
+//        });
+//        // mostrarlo
+//        popupMenu.show();
+//    }
+
+
+//    public void botonSalir(){
+//        //se busca el boton de salir en el xml
+//        Button btn_salir = findViewById(R.id.btn_salir);
+//        btn_salir.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //hace que se salga de la aplicacion
+//                finishAndRemoveTask();
+//            }
+//        });
+//    }
+//
+//    public void nuevaPartida(){
+//        //se busca el boton de nueva partida en el xml
+//        Button btn_nueva_partida = findViewById(R.id.btn_nuevaPartida);
+//        btn_nueva_partida.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //se llama a otro método
+//                generarNuevaPartida();
+//            }
+//        });
+//    }
 
     public void toggleCronometro(){
         //se busca el toggleButton y el cronometro en el xml
@@ -205,7 +290,6 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
         //se comprueba que el tamaño sea siempre dos
         if(cartasSeleccionadas.size()==2) {
-            Log.i("Debug", "He entrado en el if de seleccionar dos cartas");
             //comprobamos que ambas cartas tenga el mismo valor
             if (cartasSeleccionadas.get(0).getValor().equals(cartasSeleccionadas.get(1).getValor())) {
                 aciertoPareja(view, acierto);
@@ -219,8 +303,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
     public void aciertoPareja(View view, String acierto){
         //se envia un Toast avisando del acierto
-        Toast.makeText(view.getContext(), acierto, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(view.getContext(), acierto, Toast.LENGTH_SHORT).show();
         parejasHechas++;
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.main), acierto, Snackbar.LENGTH_SHORT);
+        snackbar.show();
 
         //se anotan las cartas como ya emparejadas
         cartasSeleccionadas.get(0).setParejaEncontrada(true);
@@ -241,7 +327,9 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         Log.i("Debug", "Son dos cartas diferentes");
         setPuedeVoltear(false);
         //toast avisando de que las cartas no son iguales
-        Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.main), fallo, Snackbar.LENGTH_SHORT);
+        snackbar.show();
 
         //handler para hacer que se volteen las cartas
         final Handler handler = new Handler();
