@@ -1,5 +1,6 @@
 package com.example.tarea_unidad_3;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -88,18 +89,26 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
 
         //se crea el adaptador, se busca el RecyclerView y la imagen de partida ganada se pone invisble
         cartaAdapter = new CartaAdapter(cartaArrayList, this);
-        rvCartas = findViewById(R.id.rvCartas);
         felicitacion = findViewById(R.id.partida_ganada);
         felicitacion.setVisibility(View.INVISIBLE);
         titulo = findViewById(R.id.titulo);
+        rvCartas = findViewById(R.id.rvCartas);
         //metodo asociado a botones o toggleButton
 //        botonSalir();
 //        nuevaPartida();
         toggleCronometro();
-
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         //se escoge el formato del RecyclerView y se le pasa el adaptador
-        rvCartas.setLayoutManager(new GridLayoutManager(this,4));
+//        rvCartas.setLayoutManager(new GridLayoutManager(this,8));
         rvCartas.setAdapter(cartaAdapter);
+
+        if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            rvCartas.setLayoutManager(new GridLayoutManager(this,4));
+            Log.i("Debug", "Estoy vertical");
+        } else if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+            rvCartas.setLayoutManager(new GridLayoutManager(this,8));
+            Log.i("Debug", "Estoy horizontal");
+        }
 
         TabLayout tabLayout = findViewById(R.id.TabLayout);
         // Añadir pestañas
