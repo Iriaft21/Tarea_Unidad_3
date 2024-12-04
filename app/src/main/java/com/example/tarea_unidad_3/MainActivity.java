@@ -99,13 +99,13 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         toggleCronometro();
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         //se escoge el formato del RecyclerView y se le pasa el adaptador
-//        rvCartas.setLayoutManager(new GridLayoutManager(this,8));
+        rvCartas.setLayoutManager(new GridLayoutManager(this,8));
         rvCartas.setAdapter(cartaAdapter);
 
-        if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
             rvCartas.setLayoutManager(new GridLayoutManager(this,4));
             Log.i("Debug", "Estoy vertical");
-        } else if (this.getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+        } else if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
             rvCartas.setLayoutManager(new GridLayoutManager(this,8));
             Log.i("Debug", "Estoy horizontal");
         }
