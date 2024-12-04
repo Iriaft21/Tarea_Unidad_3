@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/juego_de_memoria" />
 
-    <Button
+    <!--<Button
         android:id="@+id/btn_nuevaPartida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:layout_marginBottom="100dp"
         android:text="@string/btn_salir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCartas"

@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         Carta carta = cartaArrayList.get(position);
 
         //se comrpueba que la carta se pueda voltear, que este ya emparejada o que ya este seleccionada de antes en esa tanda
-        if (!getPuedeVoltear() || !cartaAdapter.isClickable || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
+        if (!getPuedeVoltear() || carta.isParejaEncontrada() || cartasSeleccionadas.contains(carta)) {
             return;
         }
         //se añade al arrayList de cartas seleccionadas
@@ -293,9 +293,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se extrae de los recursos los strings para los Toast
         String acierto = getResources().getString(R.string.toast_acierto);
         String fallo = getResources().getString(R.string.toast_diferencia);
-
         Log.i("Debug", "Carta añadida: " + carta.getValor());
-        Log.i("Debug", "Tamaño de cartasSeleccionadas: " + cartasSeleccionadas.size());
 
         //se comprueba que el tamaño sea siempre dos
         if(cartasSeleccionadas.size()==2) {
@@ -306,7 +304,8 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 falloPareja(view, fallo);
             }
         }else{
-            cartaAdapter.isClickable = true;
+            // Si solo se ha seleccionado una carta, se puede volver a clicar
+            CartaAdapter.puedeClicar = true;
         }
     }
 
@@ -327,13 +326,13 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se estan las 8 parejas encontradas se llama al metodo finalizarJuego
         if (parejasHechas == 8) {
             finalizarJuego();
-        } else {
-            cartaAdapter.isClickable = true;
         }
+        //se permite volver a clicar
+        CartaAdapter.puedeClicar = true;
     }
 
     public void falloPareja(View view, String fallo){
-        Log.i("Debug", "Son dos cartas diferentes");
+        //se deshabilita el voltear las cartas
         setPuedeVoltear(false);
         //toast avisando de que las cartas no son iguales
         //Toast.makeText(view.getContext(), fallo, Toast.LENGTH_SHORT).show();
@@ -358,8 +357,10 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                 }
                 //se vacia el ArrayList
                 cartasSeleccionadas.clear();
-                cartaAdapter.isClickable = true;
+                //se vuelve a habilitar el volteo
                 setPuedeVoltear(true);
+                //se permite volver a clicar
+                CartaAdapter.puedeClicar = true;
             }
         }, 1000);
     }
@@ -377,8 +378,13 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
                     public void run() {
                         //se vuelve a hacer la felicitacion invisible y se genera nueva partida
                         felicitacion.setVisibility(View.INVISIBLE);
-                        generarNuevaPartida();
-                        cartaAdapter.isClickable = true;
+                        try {
+                            generarNuevaPartida();
+                        } catch (Exception e) {
+                            Log.e("Error", "Error al generar nueva partida: " + e.getMessage());
+                        }
+                        //se permite volver a clicar
+                        CartaAdapter.puedeClicar = true;
                     }
                 }, 2000);
             }
