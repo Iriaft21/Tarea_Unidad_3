@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         //se crean las cartas
         cartaArrayList = new ArrayList<>(Arrays.asList(
                 new Carta(R.drawable.reverso, R.drawable.tinkaton, "tinkaton"),
@@ -77,9 +80,15 @@ public class MainActivity extends AppCompatActivity implements CartaAdapter.OnIt
         //se barajan las cartas, poniendolas en posiciones aleatorias
         Collections.shuffle(cartaArrayList);
 
+        FragmentoCartas fragmentoCartas = new FragmentoCartas();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragmentoCartas);
+        fragmentTransaction.commit();
+        
         //se crea el adaptador, se busca el RecyclerView y la imagen de partida ganada y esta ultima se pone invisible
         cartaAdapter = new CartaAdapter(cartaArrayList, this);
-        rvCartas = findViewById(R.id.rvCartas);
+//        rvCartas = findViewById(R.id.rv_cartas);
         felicitacion = findViewById(R.id.partida_ganada);
         felicitacion.setVisibility(View.INVISIBLE);
         //metodos asociado a botones o toggleButton

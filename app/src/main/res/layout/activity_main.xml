@@ -55,47 +55,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCartas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="308dp"
-        android:layout_marginEnd="31dp"
-        android:background="#5FFFFFFF"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btn_salir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="22dp"
         android:layout_marginBottom="30dp"
         android:text="@string/btn_salir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCartas"
-        app:layout_constraintVertical_bias="0.688" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_nuevaPartida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="30dp"
         android:text="@string/btn_nueva_partida"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCartas"
-        app:layout_constraintVertical_bias="0.688" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Chronometer
         android:id="@+id/cronometro"
@@ -111,6 +89,15 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.tarea_unidad_3.FragmentoCartas"
+        android:layout_width="349dp"
+        android:layout_height="336dp"
+        android:background="#5FFFFFFF"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="288dp" />
 
     <ImageView
         android:id="@+id/partida_ganada"

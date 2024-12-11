@@ -9,4 +9,6 @@
     <string name="descripcion_cara">Cara de la carta. Pueden ser distintos diseños.</string>
     <string name="txt_contentDescription_icono_juego">Icono que representa un juego de memoria</string>
     <string name="txt_contentDescription_felicitacion">Imagen que felicita al jugador una vez haya encontrado todas las parejas</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
