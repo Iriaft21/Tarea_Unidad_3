@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="136dp"
         android:textColor="@color/md_theme_onBackground_mediumContrast"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -79,8 +79,8 @@
         android:id="@+id/cronometro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="32dp"
         android:background="#000000"
         android:backgroundTint="#000000"
         android:padding="5dp"
@@ -93,11 +93,17 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="com.example.tarea_unidad_3.FragmentoCartas"
-        android:layout_width="349dp"
-        android:layout_height="336dp"
+        android:layout_width="342dp"
+        android:layout_height="374dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="20dp"
         android:background="#5FFFFFFF"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="288dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_nuevaPartida"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
     <ImageView
         android:id="@+id/partida_ganada"

@@ -1,7 +1,9 @@
 package com.example.tarea_unidad_3;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
 import static java.security.AccessController.getContext;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 public class Carta implements Parcelable {
 
     //atributos de la clase
+    private Context context;
     private int imagenReverso;
     private int imagenCara;
     private String valor;
@@ -19,10 +22,11 @@ public class Carta implements Parcelable {
     private boolean parejaEncontrada;
 
     //constructor de la clase
-    public Carta(int imagenReverso, int imagenCara, String valor) {
+    public Carta(int imagenReverso, int imagenCara, String valor, Context context) {
         this.imagenReverso = imagenReverso;
         this.imagenCara = imagenCara;
         this.valor = valor;
+        this.context = context;
     }
 
     //getters y setters de las clase
@@ -82,7 +86,7 @@ public class Carta implements Parcelable {
         valor = in.readString();
         int resourceId = in.readInt();
         if (resourceId != 0) {
-            ivReverso = new ImageView(getContext());
+            ivReverso = new ImageView(context);
             ivReverso.setImageResource(resourceId);
             ivReverso.setTag(resourceId);
         }
@@ -111,7 +115,7 @@ public class Carta implements Parcelable {
 
         @Override
         public Carta[] newArray(int i) {
-            return new Carta[0];
+            return new Carta[i];
         }
     };
 
