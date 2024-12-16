@@ -8,127 +8,29 @@
     android:background="@drawable/wallpaper"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="177dp"
-        android:text="@string/titulo"
-        android:textColor="@color/design_default_color_secondary_variant"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="37dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="34dp"
-        android:contentDescription="@string/txt_contentDescription_icono_juego"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/juego_de_memoria" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="37dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="33dp"
-        android:contentDescription="@string/txt_contentDescription_icono_juego"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/juego_de_memoria" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="136dp"
-        android:textColor="@color/md_theme_onBackground_mediumContrast"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <Button
-        android:id="@+id/btn_salir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="30dp"
-        android:text="@string/btn_salir"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu_navegacion"
+        android:layout_width="411dp"
+        android:layout_height="122dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_nuevaPartida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="30dp"
-        android:text="@string/btn_nueva_partida"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Chronometer
-        android:id="@+id/cronometro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
-        android:layout_marginEnd="32dp"
-        android:background="#000000"
-        android:backgroundTint="#000000"
-        android:padding="5dp"
-        android:textColor="#8BC34A"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.tarea_unidad_3.FragmentoCartas"
-        android:layout_width="342dp"
-        android:layout_height="374dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="20dp"
-        android:background="#5FFFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nuevaPartida"
+        android:id="@+id/fragmentContainerView2"
+        android:name="com.example.tarea_unidad_3.MainFragment"
+        android:layout_width="415dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="148dp"
+        android:layout_marginEnd="263dp"
+        app:layout_constraintBottom_toTopOf="@+id/menu_navegacion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
-
-    <ImageView
-        android:id="@+id/partida_ganada"
-        android:layout_width="300dp"
-        android:layout_height="347dp"
-        android:layout_marginBottom="132dp"
-        android:contentDescription="@string/txt_contentDescription_felicitacion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/partida_ganada" />
-
-    <!--<ImageView
-        android:id="@+id/partida_ganada"
-        android:layout_width="378dp"
-        android:layout_height="415dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/txt_contentDescription_felicitacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/partida_ganada" />-->
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

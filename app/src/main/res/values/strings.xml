@@ -11,4 +11,10 @@
     <string name="txt_contentDescription_felicitacion">Imagen que felicita al jugador una vez haya encontrado todas las parejas</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titulo_estadisticas">Estadísticas</string>
+    <string name="partida_actual">Partida actual:</string>
+    <string name="parejas_encontradas">Parejas encontradas:</string>
+    <string name="progreso">Progreso:</string>
+    <string name="tiempo">Tiempo de la partida:</string>
+    <string name="proxim">Proximamente...</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.tarea_unidad_3;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +34,7 @@ public class FragmentoCartas extends Fragment implements CartaAdapter.OnItemClic
     private ArrayList<Carta> cartaArrayList;
     private RecyclerView rvCartas;
     private CartaAdapter cartaAdapter;
-    private MainActivity mainActivity;
+    private MainFragment mainFragment;
 
     public boolean getPuedeVoltear() {
         return this.puedeVoltear;
@@ -82,7 +83,7 @@ public class FragmentoCartas extends Fragment implements CartaAdapter.OnItemClic
         cartaAdapter = new CartaAdapter(cartaArrayList, this);
         rvCartas.setAdapter(cartaAdapter);
 
-        mainActivity = (MainActivity) getActivity();
+        mainFragment = (MainFragment) getParentFragment();
         return view;
     }
 
@@ -177,13 +178,13 @@ public class FragmentoCartas extends Fragment implements CartaAdapter.OnItemClic
             @Override
             public void run() {
                 //se muestra la felicitacion
-                mainActivity.felicitacion.setVisibility(View.VISIBLE);
+                mainFragment.felicitacion.setVisibility(View.VISIBLE);
                 //otro handler para que la felicitacion permanezca visible durante unos segundos
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //se vuelve a hacer la felicitacion invisible y se genera nueva partida
-                        mainActivity.felicitacion.setVisibility(View.INVISIBLE);
+                        mainFragment.felicitacion.setVisibility(View.INVISIBLE);
                         try {
                             generarNuevaPartida();
                         } catch (Exception e) {
@@ -203,10 +204,10 @@ public class FragmentoCartas extends Fragment implements CartaAdapter.OnItemClic
         parejasHechas = 0;
 
         //se pone a cero el cronometro
-        mainActivity.cronometro.setBase(SystemClock.elapsedRealtime());
-        mainActivity.cronometro.stop();
-        mainActivity.cronometro.setBase(SystemClock.elapsedRealtime());
-        mainActivity.cronometro.start();
+        mainFragment.cronometro.setBase(SystemClock.elapsedRealtime());
+        mainFragment.cronometro.stop();
+        mainFragment.cronometro.setBase(SystemClock.elapsedRealtime());
+        mainFragment.cronometro.start();
 
         //se vuelve a barajar las cartas
         Collections.shuffle(cartaArrayList);
